@@ -5,7 +5,7 @@ This module includes functions that are thought as shortcuts for the RooFit plot
 Any doubt or suggestion, check https://github.com/Icambonb or 
 """
 
-from ROOT import *
+import ROOT
 import numpy as np
 
 """
@@ -26,8 +26,8 @@ def modelplot(var,model,dh,bool_comp,comp,colors,xlabel,ylabel,title):
  dh.plotOn(fr)
  if bool_comp:
   for i in range(len(comp)):
-  # model.plotOn(fr,RooFit.Name(comp[i]),RooFit.Components(comp[i]),RooFit.LineStyle(kDashed),RooFit.LineColor(colors[i]))
-   model.plotOn(fr,RooFit.Name(comp[i]),RooFit.Components(comp[i]),RooFit.LineColor(colors[i]))
+  # model.plotOn(fr,ROOT.RooFit.Name(comp[i]),ROOT.RooFit.Components(comp[i]),ROOT.RooFit.LineStyle(kDashed),ROOT.RooFit.LineColor(colors[i]))
+   model.plotOn(fr,ROOT.RooFit.Name(comp[i]),ROOT.RooFit.Components(comp[i]),ROOT.RooFit.LineColor(colors[i]))
  model.plotOn(fr)
  fr.GetXaxis().SetTitle(xlabel)
  fr.GetYaxis().SetTitle(ylabel)
@@ -48,7 +48,7 @@ def pullplot(var,model,dh):
  dh.plotOn(fr1)
  model.plotOn(fr1)
  histo_pulls=fr1.pullHist()
- histo_pulls.SetFillColor(kBlack)
+ histo_pulls.SetFillColor(ROOT.kBlack)
  histo_pulls.SetLineWidth(0)
  histo_pulls.SetMarkerSize(0)
  fr2=var.frame()
@@ -78,7 +78,7 @@ def parameter_saving(par,par_names,model,dh,archive_name,save_bool):
  par_vals=[par[i].getVal() for i in range(len(par))]
  par_unc=[par[i].getError() for i in range(len(par))]
 
- Chi2_model=RooChi2Var("chi2","chi2",model,dh)
+ Chi2_model=ROOT.RooChi2Var("chi2","chi2",model,dh)
  Chi2_val=Chi2_model.getVal()
  par_vals.append(Chi2_val)
  par_names_un=list(par_names)
@@ -137,7 +137,7 @@ def MatrixCov_2D(r,par1,par2,name1,name2,n):
  u1=par1.getError()
  u2=par2.getError()
 
- frame=RooPlot(par1,par2,(val1-n*u1),(val1+n*u1),(val2-n*u2),(val2+n*u2))
+ frame=ROOT.RooPlot(par1,par2,(val1-n*u1),(val1+n*u1),(val2-n*u2),(val2+n*u2))
  frame.SetTitle("Covariance between"+" "+name1+" "+"and"+" "+name2)
  r.plotOn(frame, par1, par2, "ME12ABHV")
  frame.Draw()
